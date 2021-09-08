@@ -1,6 +1,11 @@
+import { useEffect } from 'react';
 import { Container } from './styles';
 
 export function TransactionTable() {
+  useEffect(() => {
+
+  }, []);
+
   return (
     <Container>
       <table>
