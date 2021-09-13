@@ -1,8 +1,9 @@
 import Modal from 'react-modal';
-import { Container, TransactionTypeContainer } from './styles';
+import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
+import { useState } from 'react';
 
 interface NewTransactionModalProps {
   isOpen: boolean,
@@ -12,6 +13,8 @@ interface NewTransactionModalProps {
 Modal.setAppElement('#root'); // isso inseri aria-hidden na div#root quando modal estiver aberto (acessibilidade)
 
 export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModalProps) {
+  const [type, setType] = useState('deposit');
+
   return (
     <Container>
       <Modal
@@ -39,14 +42,24 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
           />
 
           <TransactionTypeContainer>
-            <button type="button">
+            <RadioBox
+              type="button"
+              onClick={() => setType('deposit')}
+              isActive={type === 'deposit'}
+              activeColor="green"
+            >
               <img src={incomeImg} alt="Entrada" />
               <span>Entrada</span>
-            </button>
-            <button type="button">
+            </RadioBox>
+            <RadioBox
+              type="button"
+              onClick={() => setType('withdraw')}
+              isActive={type === 'withdraw'} // propriedade criada por meio do style-component
+              activeColor="red" // propriedade criada por meio do style-component
+            >
               <img src={outcomeImg} alt="Saída" />
               <span>Saída</span>
-            </button>
+            </RadioBox>
           </TransactionTypeContainer>
 
           <input

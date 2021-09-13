@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { darken } from "polished"; // lib com n funções de escurecer e clarear cores
+import { darken, transparentize } from "polished"; // lib com n funções de escurecer e clarear cores
 
 export const Container = styled.form`
   h2 {
@@ -50,31 +50,43 @@ export const TransactionTypeContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr; // divide a grid em duas colunas
   gap: 0.5rem; // espaçamento entre as duas colunas
+`;
 
-  button {
-    height: 4rem;
-    border: 1px solid #d7d7d7;
-    border-radius: 0.25rem;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+const colors = {
+  red: '#e52e4d',
+  green: '#33cc95'
+}
+interface RadioBoxProps {
+  isActive: boolean;
+  activeColor: 'green' | 'red'
+}
 
-    transition: border-color 0.2s;
-    &:hover {
-      border-color: ${darken(0.1, '#d7d7d7')};
-    }
+export const RadioBox = styled.button<RadioBoxProps>` // pode se criar propriedade para component atraves de interface
+  height: 4rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 0.25rem;
+  background-color: ${props => props.isActive
+    ? transparentize(0.9, colors[props.activeColor])
+    : 'transparent'
+  }; // toda função em propriedade recebe props
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    img {
-      width: 20px;
-      height: 20px;
-    }
-
-    span {
-      display: inline-block;
-      margin-left: 1rem;
-      font-size: 1rem;
-      color: var(--text-title);
-    }
+  transition: border-color 0.2s;
+  &:hover {
+    border-color: ${darken(0.1, '#d7d7d7')};
   }
-`
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    display: inline-block;
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: var(--text-title);
+  }
+`;
