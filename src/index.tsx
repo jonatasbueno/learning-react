@@ -11,9 +11,9 @@ createServer({
     transaction: Model, // define uma entidade dentro do database (screma)
   },
 
-  seeds(server) {
+  seeds(server) { // inserindo dados na inicialização dos dados
     server.db.loadData({
-      transactions: [
+      transactions: [ // dou o mesmo nome do modelo só que em seu plural
         {
           id: 1,
           title: "Freelance de webseite",
@@ -44,7 +44,7 @@ createServer({
     this.post('/transaction', (schema, request) => {
       const data = JSON.parse(request.requestBody);
 
-      return schema.create('transcation', data); // cria uma transaction no database (schema)
+      return schema.create('transaction', data); // cria uma transaction no database (schema)
     })
   }
 })
