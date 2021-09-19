@@ -11,6 +11,29 @@ createServer({
     transaction: Model, // define uma entidade dentro do database (screma)
   },
 
+  seeds(server) {
+    server.db.loadData({
+      transactions: [
+        {
+          id: 1,
+          title: "Freelance de webseite",
+          type: 'deposit',
+          category: 'Dev',
+          amount: 6000,
+          createAt: new Date('2021-02-12 09:00:00')
+        },
+        {
+          id: 2,
+          title: "Aluguel",
+          type: 'withdraw',
+          category: 'Casa',
+          amount: 1100,
+          createAt: new Date('2021-02-12 09:00:00')
+        }
+      ]
+    })
+  },
+
   routes() {
     this.namespace = 'api'; // basepoint que será interceptado
 
