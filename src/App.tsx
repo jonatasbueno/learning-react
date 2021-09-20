@@ -3,7 +3,7 @@ import { NewTransactionModal } from './components/NewTransactionModal';
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { GlobalStyle } from "./styles/global";
-import { TransactionProvider } from "./TransactionContext";
+import { TransactionProvider } from "./hooks/useTransactions";
 
 export function App() {
   const [isNewTransactionModal, setIsNewTransactionModal] = useState(false);

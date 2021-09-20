@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { api } from "./servers/api";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { api } from "../servers/api";
 
 interface Transaction {
   id: number,
@@ -25,7 +25,7 @@ interface TransactionContextData {
   createTransaction: (transaction: TransactionInput) => Promise<void>;
 }
 
-export const TransactionContext = createContext<TransactionContextData>(
+const TransactionContext = createContext<TransactionContextData>(
   {} as TransactionContextData
 );
 
@@ -57,4 +57,12 @@ export function TransactionProvider({ children }: TransactionContextProps) {
       {children}
     </TransactionContext.Provider>
   )
+}
+/**
+ * Aqui retornamos todo o Context como hook, encapsulando o useContext
+ */
+export function useTransactions() {
+  const context = useContext(TransactionContext);
+
+  return context;
 }
