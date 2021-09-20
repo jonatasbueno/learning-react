@@ -10,11 +10,24 @@ interface Transaction {
   createAt: string
 }
 
+type TransactionInput = Omit<Transaction, 'id' | 'createAt'>; // cria um tipo omitindo tais propriedades
+/**
+ * cria tipo com base em Transaction selecionando as propriedade descritas
+ */
+// type TransactionInput = Pick<Transaction, 'title' | 'amount' | 'type' | 'category'>;
+
 interface TransactionContextProps {
   children: ReactNode // children deve ser do tipo 'react node' que permite qualquer nó react válido
 }
 
-export const TransactionContext = createContext<Transaction[]>([]);
+interface TransactionContextData {
+  transactions: Transaction[];
+  createTransaction: (transaction: TransactionInput) => void;
+}
+
+export const TransactionContext = createContext<TransactionContextData>(
+  {} as TransactionContextData
+);
 
 /**
  * A ideia aqui foi retornar um Context.Provider já vinculado com um estado, que por sua vez é alterado com o retorno 
@@ -30,8 +43,12 @@ export function TransactionProvider({ children }: TransactionContextProps) {
       .then(response => setTransactions(response.data.transactions));
   }, []);
 
+  function createTransaction(transaction: TransactionInput) {
+    api.post('/transaction', transaction);
+  }
+
   return (
-    <TransactionContext.Provider value={transactions}>
+    <TransactionContext.Provider value={{ transactions, createTransaction }}>
       {children}
     </TransactionContext.Provider>
   )
